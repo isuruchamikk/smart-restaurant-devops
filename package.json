@@ -1,0 +1,17 @@
+{
+  "name": "smart-restaurant-devops",
+  "version": "1.0.0",
+  "description": "Smart Restaurant Management App",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}
