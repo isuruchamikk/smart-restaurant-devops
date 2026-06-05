@@ -5,12 +5,15 @@ pipeline {
         PATH = "C:\\Program Files\\nodejs;${env.PATH}"
     }
 
-    stages {
-        stage('Build') {
-            steps {
-                bat 'npm install'
-            }
-        }
+    stage('Build') {
+    steps {
+        bat '''
+        if exist node_modules rmdir /s /q node_modules
+        if exist package-lock.json del package-lock.json
+        npm install
+        '''
+    }
+}
 
         stage('Test') {
             steps {
