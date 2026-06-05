@@ -35,9 +35,14 @@ pipeline {
         }
 
         stage('Monitoring') {
-            steps {
-                bat 'curl http://localhost:3000/health'
-            }
-        }
+    steps {
+        bat '''
+        docker rm -f smart-restaurant-container || exit /b 0
+        docker run -d --name smart-restaurant-container -p 3000:3000 smart-restaurant-app
+        timeout /t 5
+        curl http://localhost:3000/health
+        '''
+    }
+}
     }
 }
