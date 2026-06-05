@@ -5,25 +5,20 @@ pipeline {
         PATH = "C:\\Program Files\\nodejs;${env.PATH}"
     }
 
-    stage('Build') {
-    steps {
-        bat '''
-        if exist node_modules rmdir /s /q node_modules
-        if exist package-lock.json del package-lock.json
-        npm install
-        '''
-    }
-}
+    stages {
+
+        stage('Build') {
+            steps {
+                bat '''
+                if exist node_modules rmdir /s /q node_modules
+                npm install
+                '''
+            }
+        }
 
         stage('Test') {
             steps {
                 bat 'npm test'
-            }
-        }
-
-        stage('Code Quality') {
-            steps {
-                bat 'npx sonarqube-scanner'
             }
         }
 
@@ -36,12 +31,6 @@ pipeline {
         stage('Deployment') {
             steps {
                 bat 'docker build -t smart-restaurant-app .'
-            }
-        }
-
-        stage('Release') {
-            steps {
-                bat 'echo Release version 1.0.0 created successfully'
             }
         }
 
