@@ -34,12 +34,12 @@ pipeline {
             }
         }
 
-        stage('Monitoring') {
+      stage('Monitoring') {
     steps {
         bat '''
-        docker rm -f smart-restaurant-container || exit /b 0
+        docker rm -f smart-restaurant-container || echo No old container found
         docker run -d --name smart-restaurant-container -p 3000:3000 smart-restaurant-app
-        timeout /t 5
+        ping 127.0.0.1 -n 8 > nul
         curl http://localhost:3000/health
         '''
     }
